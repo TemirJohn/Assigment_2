@@ -1,35 +1,37 @@
 package org.example.service;
 import org.example.model.Task;
 import org.example.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
+@Service("specialtaskservice")
+public class SpecialTaskService implements TaskService {
+    private final TaskRepository taskRepository;
 
-@Service
-class SpecialTaskService implements TaskService {
-    private final TaskRepository repository;
+    public SpecialTaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
-    public SpecialTaskService(TaskRepository repository) {
-        this.repository = repository;
+    public List<Task> getAllTasks() {
+        return Collections.emptyList();
     }
 
     @Override
-    public void addTask(Long id, String description) {
-        repository.saveTask(new Task(id, "[Special] " + description));
-        System.out.println("SpecialTaskService: Special task added.");
+    public Optional<Task> getTaskById(int id) {
+        return Optional.empty();
+    }
+
+    public Task createTask(String title, String description, String status) {
+        Task task = new Task(0, title, description, status);
+        taskRepository.save(task);
+        return task; // ✅ Возвращаем сохраненную задачу
     }
 
     @Override
-    public Task fetchTask(Long id) {
-        return repository.getTask(id);
-    }
-
-    @Override
-    public void completeTask(Long id) {
-        Task task = repository.getTask(id);
-        if (task != null) {
-            task.markComplete();
-            System.out.println("SpecialTaskService: Special task completed.");
-        }
+    public void deleteTask(int id) {
     }
 }

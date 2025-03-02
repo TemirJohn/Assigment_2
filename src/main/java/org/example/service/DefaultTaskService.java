@@ -1,36 +1,38 @@
 package org.example.service;
+
 import org.example.model.Task;
 import org.example.repository.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 
+import java.util.List;
+import java.util.Optional;
 
-@Service
+
+@Service("defaultTaskService")
 @Primary
-class DefaultTaskService implements TaskService {
-    private final TaskRepository repository;
+public class DefaultTaskService implements TaskService {
+    @Autowired
+    private TaskRepository taskRepository;
 
-    public DefaultTaskService(TaskRepository repository) {
-        this.repository = repository;
+    @Override
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
     }
 
     @Override
-    public void addTask(Long id, String description) {
-        repository.saveTask(new Task(id, description));
-        System.out.println("DefaultTaskService: Task added.");
+    public Optional<Task> getTaskById(int id) {
+        return taskRepository.findById(id);
     }
 
     @Override
-    public Task fetchTask(Long id) {
-        return repository.getTask(id);
+    public Task createTask(String title, String description, String status) {
+        return taskRepository.save(new Task(0, title, description, status));
     }
 
-    @Override
-    public void completeTask(Long id) {
-        Task task = repository.getTask(id);
-        if (task != null) {
-            task.markComplete();
-            System.out.println("DefaultTaskService: Task completed.");
-        }
+
+    public void deleteTask(int id) {
+        taskRepository.delete(id);
     }
 }

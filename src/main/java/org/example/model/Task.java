@@ -1,26 +1,30 @@
 package org.example.model;
 
 public class Task {
-    public Long id;
+    public int id;
+    private String title;
     private String description;
-    private boolean completed;
+    private String status;
 
-    public Task(Long id, String description) {
+    public Task(int id, String title, String description, String status) {
         this.id = id;
-        this.completed = false;
+        this.title = title;
         this.description = description;
+        this.status = status;
     }
 
-    public void markComplete() {
-        this.completed = true;
-    }
+    public int getId() { return id; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public String getStatus() { return status; }
 
-    @Override
+
     public String toString() {
         return "Task{" +
                 "id=" + id +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", completed=" + completed +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
