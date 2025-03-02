@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("specialtaskservice")
+@Qualifier("specialtaskservice")
 public class SpecialTaskService implements TaskService {
     private final TaskRepository taskRepository;
 

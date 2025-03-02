@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.model.Task;
 import org.example.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 
 @Service("defaultTaskService")
+@Qualifier("defaultTaskService")
 @Primary
 public class DefaultTaskService implements TaskService {
     @Autowired
